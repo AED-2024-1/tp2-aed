@@ -3,23 +3,26 @@ package aed.heap;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Heap<T> {
+import aed.heap.interfaces.HeapNode;
 
+public class Heap<T extends HeapNode> {
     private ArrayList<T> _heap;
     private Comparator<T> _comparator;
     private int _len;
+    private int _heapId;
 
-    public Heap(Comparator<T> comparator) {
-        _heap = new ArrayList<>();
+    public Heap(Comparator<T> comparator, int heapId) {
+        _heap = new ArrayList<T>();
         _len = 0;
         _comparator = comparator;
+        _heapId = heapId;
     }
 
-    public int add(T value) {
+    public void add(T value) {
         _heap.add(value);
+        value.setIndex(_heapId,_len);
         _len++;
         siftUp(_len - 1);
-        return _len - 1;
     }
 
     public T extractMax() {
@@ -28,13 +31,14 @@ public class Heap<T> {
 
     public void remove(int handle) {
         if (handle < 0 || handle >= _len) {
-            return 0;
+            return;
         }
 
-        T removed_value = _heap.get(handle);
         T lastElement = _heap.get(_len - 1);
-
+        
         _heap.set(handle, lastElement);
+        lastElement.setIndex(_heapId, handle);
+
         _heap.set(_len - 1, null);
         _len--;
 
@@ -64,6 +68,10 @@ public class Heap<T> {
         if (_comparator.compare(father, child) < 0) {
             _heap.set(father_index, child);
             _heap.set(index, father);
+
+            father.setIndex(_heapId, index);
+            child.setIndex(_heapId, father_index);
+
             siftUp(father_index);
         }
     }
@@ -89,6 +97,10 @@ public class Heap<T> {
             T temp = _heap.get(index);
             _heap.set(index, _heap.get(largest));
             _heap.set(largest, temp);
+
+            _heap.get(largest).setIndex(_heapId,index);
+            temp.setIndex(_heapId, largest);
+
             siftDown(largest);
         }
     }
