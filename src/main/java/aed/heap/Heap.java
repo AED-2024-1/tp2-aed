@@ -3,17 +3,21 @@ package aed.heap;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import aed.Nodos.NodoTraslados;
+
 public class Heap<T> {
 
     private ArrayList<T> _heap;
     private Comparator<T> _comparator;
     private int _len;
+    private boolean Anti;
 
-    public Heap(Comparator<T> comparator) {
+    public Heap(Comparator<T> comparator,boolean anti) {
         _heap = new ArrayList<>();
         _len = 0;
         _comparator = comparator;
-    }
+        Anti = anti;
+        }
 
     public int add(T value) {
         _heap.add(value);
@@ -28,7 +32,7 @@ public class Heap<T> {
 
     public void remove(int handle) {
         if (handle < 0 || handle >= _len) {
-            return 0;
+            return;
         }
 
         T removed_value = _heap.get(handle);
@@ -63,7 +67,9 @@ public class Heap<T> {
 
         if (_comparator.compare(father, child) < 0) {
             _heap.set(father_index, child);
+            handlenodo(child, father_index);
             _heap.set(index, father);
+            handlenodo(father, index);
             siftUp(father_index);
         }
     }
@@ -88,8 +94,22 @@ public class Heap<T> {
         if (largest != index) {
             T temp = _heap.get(index);
             _heap.set(index, _heap.get(largest));
+            handlenodo(_heap.get(largest), index);
             _heap.set(largest, temp);
+            handlenodo(temp, largest);
             siftDown(largest);
         }
+    }
+
+    private void handlenodo(T tipo, int handle){
+        if(tipo.getClass() ==  NodoTraslados.class){
+            NodoTraslados tipoN = (NodoTraslados) tipo;
+            if(Anti){
+               tipoN.setAntiguedad(handle);            
+            }else{
+               tipoN.setRedituable(handle);
+            }
+        }
+
     }
 }
