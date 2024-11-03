@@ -2,11 +2,20 @@ package aed;
 
 import java.util.ArrayList;
 
+import aed.Nodos.NodoCiudad;
+import aed.Nodos.NodoTraslados;
+import aed.heap.Heap;
+
 public class BestEffort {
-    //Completar atributos privados
+    ArrayList<NodoCiudad> listaciudades;
+    Heap<NodoTraslados>  heap_antiguedades;
+    Heap<NodoTraslados>  heap_redituables;
+    Heap<NodoCiudad>    heap_superhabit;
 
     public BestEffort(int cantCiudades, Traslado[] traslados){
-        // Implementar
+        for(int i = 0; i < cantCiudades;i++){
+
+        }
     }
 
     public void registrarTraslados(Traslado[] traslados){
