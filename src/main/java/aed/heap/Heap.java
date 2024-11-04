@@ -9,8 +9,12 @@ public class Heap<T extends HeapNode> {
     private ArrayList<T> _heap;
     private Comparator<T> _comparator;
     private int _len;
+    // ¿Por qué un heapID? Esto es debido a que mapearemos los heapsId como los indices de un array
+    // en el objeto HeapElement, y cada valor determinará el handle según el heap
+
     private int _heapId;
 
+    // DI: inyectamos comparador según el heap que queramos
     public Heap(Comparator<T> comparator, int heapId) {
         _heap = new ArrayList<T>();
         _len = 0;
@@ -20,6 +24,8 @@ public class Heap<T extends HeapNode> {
 
     public void add(T value) {
         _heap.add(value);
+        // Utilizamos las funcionalidades de la interfaz HeapNode, que nos provee una forma de
+        // setear el valor del handle en cada posición (representada por el heapId)
         value.setHandle(_heapId,_len);
         _len++;
         siftUp(_len - 1);

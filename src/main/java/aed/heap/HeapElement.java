@@ -4,11 +4,11 @@ import aed.heap.interfaces.HeapNode;
 
 public class HeapElement<T> implements HeapNode {
     private T value;
-    private int[] indices; // Array to store indices for multiple heaps
+    private int[] indices; // Array que guarda en cada posición un handle, y el índice es el heapId
 
     public HeapElement(T value, int len) {
         this.value = value;
-        this.indices = new int[len]; // Array for up to 4 heaps (can be adjusted)
+        this.indices = new int[len]; 
     }
 
     public T getValue() {
@@ -28,6 +28,7 @@ public class HeapElement<T> implements HeapNode {
             return indices[heapId];
         }
         // Error: No existe ese heapId
+        // Debe manejarse correctamente!
         return -1;
     }
 }
