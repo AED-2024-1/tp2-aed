@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+
+import aed.nodos.Traslado;
+
 import org.junit.jupiter.api.BeforeEach;
 
 public class BestEffortTests {

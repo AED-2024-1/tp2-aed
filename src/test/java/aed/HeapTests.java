@@ -37,6 +37,7 @@ public class HeapTests {
         heap1.add(element3);
 
         assertEquals(30, heap1.extractMax().getValue(), "Max should be 30 after adding elements to heap1");
+        assertEquals("[30,10,20]", heap1.toString());
 
         heap2.add(element1);
         heap2.add(element2);

@@ -114,10 +114,19 @@ public class Heap<T extends HeapNode> {
     public String toString(){
         String res = "[";
         int i;
+        HeapElement val;
         for(i = 0; i < _heap.size()-1;i++){
-            res = res + _heap.get(i) + ",";
+        val = (HeapElement) _heap.get(i);
+
+            if(_heap.get(i)!= null){
+            res = res + val.getValue() + ",";
+            }
         }
-        res = res + _heap.get(i+1) + "]";
+        val = (HeapElement) _heap.get(i);
+        
+        if(_heap.get(i)!= null){
+        res = res + val.getValue() + "]";
+        }
         return res;
     }
 }
