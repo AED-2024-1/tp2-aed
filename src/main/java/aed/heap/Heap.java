@@ -110,4 +110,14 @@ public class Heap<T extends HeapNode> {
             siftDown(largest);
         }
     }
+    @Override
+    public String toString(){
+        String res = "[";
+        int i;
+        for(i = 0; i < _heap.size()-1;i++){
+            res = res + _heap.get(i) + ",";
+        }
+        res = res + _heap.get(i+1) + "]";
+        return res;
+    }
 }
