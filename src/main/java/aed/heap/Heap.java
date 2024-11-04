@@ -20,7 +20,7 @@ public class Heap<T extends HeapNode> {
 
     public void add(T value) {
         _heap.add(value);
-        value.setIndex(_heapId,_len);
+        value.setHandle(_heapId,_len);
         _len++;
         siftUp(_len - 1);
     }
@@ -37,7 +37,7 @@ public class Heap<T extends HeapNode> {
         T lastElement = _heap.get(_len - 1);
         
         _heap.set(handle, lastElement);
-        lastElement.setIndex(_heapId, handle);
+        lastElement.setHandle(_heapId, handle);
 
         _heap.set(_len - 1, null);
         _len--;
@@ -69,8 +69,8 @@ public class Heap<T extends HeapNode> {
             _heap.set(father_index, child);
             _heap.set(index, father);
 
-            father.setIndex(_heapId, index);
-            child.setIndex(_heapId, father_index);
+            father.setHandle(_heapId, index);
+            child.setHandle(_heapId, father_index);
 
             siftUp(father_index);
         }
@@ -98,8 +98,8 @@ public class Heap<T extends HeapNode> {
             _heap.set(index, _heap.get(largest));
             _heap.set(largest, temp);
 
-            _heap.get(largest).setIndex(_heapId,index);
-            temp.setIndex(_heapId, largest);
+            _heap.get(index).setHandle(_heapId,index);
+            _heap.get(largest).setHandle(_heapId, largest);
 
             siftDown(largest);
         }
