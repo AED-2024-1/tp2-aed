@@ -36,14 +36,14 @@ public class HeapTests {
         heap1.add(element2);
         heap1.add(element3);
 
-        assertEquals(30, heap1.extractMax().getValue(), "Max should be 30 after adding elements to heap1");
+        assertEquals(30, heap1.getMax().getValue(), "Max should be 30 after adding elements to heap1");
         assertEquals("[30,10,20]", heap1.toString());
 
         heap2.add(element1);
         heap2.add(element2);
         heap2.add(element3);
 
-        assertEquals(30, heap2.extractMax().getValue(), "Max should be 30 after adding elements to heap2");
+        assertEquals(30, heap2.getMax().getValue(), "Max should be 30 after adding elements to heap2");
     }
 
     @Test
@@ -62,11 +62,11 @@ public class HeapTests {
         heap1.remove(indexInHeap1);
         heap2.remove(indexInHeap2);
 
-        assertNotEquals(20, heap1.extractMax().getValue(), "Max should no longer be 20 in heap1 after removal");
-        assertNotEquals(20, heap2.extractMax().getValue(), "Max should no longer be 20 in heap2 after removal");
+        assertNotEquals(20, heap1.getMax().getValue(), "Max should no longer be 20 in heap1 after removal");
+        assertNotEquals(20, heap2.getMax().getValue(), "Max should no longer be 20 in heap2 after removal");
 
-        assertEquals(30, heap1.extractMax().getValue(), "Max should be 30 in heap1 after removal of 20");
-        assertEquals(30, heap2.extractMax().getValue(), "Max should be 30 in heap2 after removal of 20");
+        assertEquals(30, heap1.getMax().getValue(), "Max should be 30 in heap1 after removal of 20");
+        assertEquals(30, heap2.getMax().getValue(), "Max should be 30 in heap2 after removal of 20");
     }
 
     @Test
@@ -80,13 +80,13 @@ public class HeapTests {
         heap1.add(element2);
         heap1.add(element1);
 
-        assertEquals(50, heap1.extractMax().getValue(), "Max should be 50 in heap1 after adding multiple elements");
+        assertEquals(50, heap1.getMax().getValue(), "Max should be 50 in heap1 after adding multiple elements");
 
         heap1.remove(element5.getHandle(0));
-        assertEquals(40, heap1.extractMax().getValue(), "Max should be 40 in heap1 after removing 50");
+        assertEquals(40, heap1.getMax().getValue(), "Max should be 40 in heap1 after removing 50");
 
         heap1.remove(element4.getHandle(0));
-        assertEquals(30, heap1.extractMax().getValue(), "Max should be 30 in heap1 after removing 40");
+        assertEquals(30, heap1.getMax().getValue(), "Max should be 30 in heap1 after removing 40");
     }
 
     @Test
@@ -97,7 +97,7 @@ public class HeapTests {
         int invalidHandle = -1;
         heap1.remove(invalidHandle);
 
-        assertEquals(20, heap1.extractMax().getValue(), "Max should remain 20 after attempting to remove with an invalid handle");
+        assertEquals(20, heap1.getMax().getValue(), "Max should remain 20 after attempting to remove with an invalid handle");
     }
 
     @Test
@@ -111,9 +111,9 @@ public class HeapTests {
         heap2.add(element3);
 
         heap1.remove(element3.getHandle(0));
-        assertEquals(20, heap1.extractMax().getValue(), "Max should be 20 in heap1 after removing 30");
+        assertEquals(20, heap1.getMax().getValue(), "Max should be 20 in heap1 after removing 30");
 
         heap2.remove(element3.getHandle(1));
-        assertEquals(20, heap2.extractMax().getValue(), "Max should be 20 in heap2 after removing 30");
+        assertEquals(20, heap2.getMax().getValue(), "Max should be 20 in heap2 after removing 30");
     }
 }
