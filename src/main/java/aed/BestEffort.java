@@ -14,13 +14,17 @@ public class BestEffort {
     private Heap<HeapElement<Traslado>> _heapRedituables;
     private Heap<HeapElement<Traslado>> _heapAntiguos;
     private Heap<HeapElement<Ciudad>> _heapSuperHabit;
-    private ArrayList<HeapElement<Ciudad>> _Maxganancia;
-    private ArrayList<HeapElement<Ciudad>> _Maxperdida;
+    private int  _Maxganancia;
+    private int _Maxperdida;
+    private ArrayList _IdMaxganancia;
     private int _promedioGanancia;
+    ArrayList<HeapElement<Ciudad>> arrayCiudad;
 
 
     public BestEffort(int cantCiudades, Traslado[] traslados){
         ArrayList<HeapElement<Traslado>> arrayTraslados = new ArrayList<HeapElement<Traslado>>();
+        arrayCiudad =  new ArrayList<HeapElement<Ciudad>>();
+        _IdMaxganancia = new ArrayList<>();
 
         int i = 0;
         for(Traslado traslado : traslados) 
@@ -35,14 +39,12 @@ public class BestEffort {
         _heapRedituables = new Heap<HeapElement<Traslado>>(new GananciaComparator(), HeapIDS.HeapRedituables.ordinal(), arrayTraslados);
         _heapAntiguos = new Heap<HeapElement<Traslado>>(new TimestampComparator(), HeapIDS.HeapAntiguos.ordinal(), arrayTraslados);
 
-        ArrayList<HeapElement<Ciudad>> arrayCiudad = new ArrayList<HeapElement<Ciudad>>();
 
         for(int n = 0; n < cantCiudades; n++){
             Ciudad ciudad = new Ciudad(n);
             HeapElement<Ciudad> nodoCiudad = new HeapElement<Ciudad>(ciudad, 1);
             nodoCiudad.setHandle(0, n);
             arrayCiudad.add(nodoCiudad);
-            n++;
         }
 
         _heapSuperHabit  = new Heap<HeapElement<Ciudad>>(new SuperHabitComparator(),0,arrayCiudad);
@@ -62,17 +64,36 @@ public class BestEffort {
     }
 
     public int[] despacharMasRedituables(int n){
-        int[] res = new int[_heapRedituables.size()];
+        int[] res = new int[n];
         HeapElement<Traslado> value;
         int handle;
         for(int i = 0; i < n; i++){
            value =  _heapRedituables.extractMax();
            handle = value.getHandle(HeapIDS.HeapAntiguos.ordinal());
            _heapAntiguos.remove(handle);
-           res[n] = value.getValue().getId();
+           res[i] = value.getValue().getId();
+           int index = value.getValue().getOrigen();
+           HeapElement<Ciudad> origen = arrayCiudad.get(index);
+           origen.getValue().setGanancia(origen.getValue().getGanancia()+value.getValue().getGananciaNeta());
+           maxgan(origen);
         }
 
         return res;
+    }
+    private void maxgan(HeapElement<Ciudad> value){
+        int id = value.getValue().getId();
+        if(_IdMaxganancia.size() == 0){
+        _IdMaxganancia.add(id);
+        _Maxganancia = value.getValue().getGanancia();
+        }else{
+            if(_Maxganancia < value.getValue().getGanancia()){
+                _IdMaxganancia = new ArrayList<>();
+                _IdMaxganancia.add(id);
+            }else if(_Maxganancia == value.getValue().getGanancia()){
+                _IdMaxganancia.add(id);
+            }
+
+        }
     }
 
     public int[] despacharMasAntiguos(int n){
@@ -86,8 +107,8 @@ public class BestEffort {
     }
 
     public ArrayList<Integer> ciudadesConMayorGanancia(){
-        // Implementar
-        return null;
+        
+        return _IdMaxganancia;
     }
 
     public ArrayList<Integer> ciudadesConMayorPerdida(){
