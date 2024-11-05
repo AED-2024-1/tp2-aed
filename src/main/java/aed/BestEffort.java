@@ -7,15 +7,17 @@ import aed.nodos.*;
 import aed.heap.HeapElement;
 import aed.implementation.HeapIDS;
 import aed.implementation.comparators.GananciaComparator;
+import aed.implementation.comparators.SuperHabitComparator;
 import aed.implementation.comparators.TimestampComparator;
 
 public class BestEffort {
     private Heap<HeapElement<Traslado>> _heapRedituables;
     private Heap<HeapElement<Traslado>> _heapAntiguos;
+    private Heap<HeapElement<Ciudad>> _heapSuperHabit;
 
     public BestEffort(int cantCiudades, Traslado[] traslados){
         ArrayList<HeapElement<Traslado>> arrayTraslados = new ArrayList<HeapElement<Traslado>>();
-        
+
         int i = 0;
         for(Traslado traslado : traslados) 
         {
@@ -28,6 +30,19 @@ public class BestEffort {
 
         _heapRedituables = new Heap<HeapElement<Traslado>>(new GananciaComparator(), HeapIDS.HeapRedituables.ordinal(), arrayTraslados);
         _heapAntiguos = new Heap<HeapElement<Traslado>>(new TimestampComparator(), HeapIDS.HeapAntiguos.ordinal(), arrayTraslados);
+
+        ArrayList<HeapElement<Ciudad>> arrayCiudad = new ArrayList<HeapElement<Ciudad>>();
+
+        for(int n = 0; n < cantCiudades; n++){
+            Ciudad ciudad = new Ciudad(n);
+            HeapElement<Ciudad> nodoCiudad = new HeapElement<Ciudad>(ciudad, 1);
+            nodoCiudad.setHandle(0, n);
+            arrayCiudad.add(nodoCiudad);
+            n++;
+        }
+
+        _heapSuperHabit  = new Heap<HeapElement<Ciudad>>(new SuperHabitComparator(),0,arrayCiudad);
+
     }
 
     public void registrarTraslados(Traslado[] traslados){
