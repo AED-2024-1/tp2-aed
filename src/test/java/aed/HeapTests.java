@@ -2,6 +2,8 @@ package aed;
 
 import java.util.Comparator;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,11 +11,15 @@ import org.junit.jupiter.api.Test;
 
 import aed.heap.Heap;
 import aed.heap.HeapElement;
+import aed.implementation.HeapIDS;
+import aed.implementation.comparators.GananciaComparator;
+import aed.nodos.Traslado;
 
 public class HeapTests {
 
     private Heap<HeapElement<Integer>> heap1;
     private Heap<HeapElement<Integer>> heap2;
+    private Heap<HeapElement<Integer>> heap3;
     private HeapElement<Integer> element1;
     private HeapElement<Integer> element2;
     private HeapElement<Integer> element3;
@@ -115,5 +121,44 @@ public class HeapTests {
 
         heap2.remove(element3.getHandle(1));
         assertEquals(20, heap2.getMax().getValue(), "Max should be 20 in heap2 after removing 30");
+    }
+    @Test
+    void prueba() {
+        ArrayList<HeapElement<Integer>> list = new ArrayList<HeapElement<Integer>>();
+        Comparator<HeapElement<Integer>> comparator = Comparator.comparingInt(HeapElement::getValue);
+        
+        element1 = new HeapElement(23, 2);
+        element2 = new HeapElement(78, 2);
+        element3 = new HeapElement(156, 2);
+        HeapElement<Integer> element4 = new HeapElement(5, 2);
+        HeapElement<Integer> element5 = new HeapElement(199, 2);
+        HeapElement<Integer> element6 = new HeapElement(42, 2);
+        HeapElement<Integer> element7 = new HeapElement(88, 2);
+        HeapElement<Integer>element8 = new HeapElement(134, 2);
+        HeapElement<Integer> element9 = new HeapElement(12, 2);
+        HeapElement<Integer> element10 = new HeapElement(67, 2);
+        HeapElement<Integer> element11 = new HeapElement(150, 2);
+        HeapElement<Integer> element12 = new HeapElement(9, 2);
+        HeapElement<Integer> element13 = new HeapElement(101, 2);
+        HeapElement<Integer> element14 = new HeapElement(58, 2);
+        
+        list.add(element1);
+        list.add(element2);
+        list.add(element3);
+        list.add(element4);
+        list.add(element5);
+        list.add(element6);
+        list.add(element7);
+        list.add(element8);
+        list.add(element9);
+        list.add(element10);
+        list.add(element11);
+        list.add(element12);
+        list.add(element13);
+        list.add(element14);
+        
+        heap3 =  new Heap<HeapElement<Integer>>(comparator, HeapIDS.HeapRedituables.ordinal(), list);
+
+        heap3.toString();
     }
 }

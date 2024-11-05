@@ -37,7 +37,7 @@ public class Heap<T extends HeapNode> {
     {
         for(int i = 0; i < _len; i++)
         {
-            siftDown(i);
+            siftDown(_len-1-i);
         }
     }
 

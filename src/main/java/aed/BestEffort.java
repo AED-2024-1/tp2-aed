@@ -15,11 +15,15 @@ public class BestEffort {
 
     public BestEffort(int cantCiudades, Traslado[] traslados){
         ArrayList<HeapElement<Traslado>> arrayTraslados = new ArrayList<HeapElement<Traslado>>();
-
+        
+        int i = 0;
         for(Traslado traslado : traslados) 
         {
             HeapElement<Traslado> nodoTraslado = new HeapElement<Traslado>(traslado, 2);
+            nodoTraslado.setHandle(HeapIDS.HeapRedituables.ordinal(),i);
+            nodoTraslado.setHandle(HeapIDS.HeapAntiguos.ordinal(),i);
             arrayTraslados.add(nodoTraslado);
+            i++;
         }
 
         _heapRedituables = new Heap<HeapElement<Traslado>>(new GananciaComparator(), HeapIDS.HeapRedituables.ordinal(), arrayTraslados);
