@@ -31,7 +31,7 @@ public class HeapTests {
         heap1 = new Heap<>(comparator, 0);
         heap2 = new Heap<>(comparator, 1);
 
-        element1 = new HeapElement(10, 2);
+        element1 = new HeapElement(20, 2);
         element2 = new HeapElement(20, 2);
         element3 = new HeapElement(30, 2);
     }
@@ -42,14 +42,14 @@ public class HeapTests {
         heap1.add(element2);
         heap1.add(element3);
 
-        assertEquals(30, heap1.getMax().getValue(), "Max should be 30 after adding elements to heap1");
-        assertEquals("[30,10,20]", heap1.toString());
+        assertEquals(30, heap1.getMax().getValue());
+        assertEquals("[30,20,20]", heap1.toString());
 
-        heap2.add(element1);
         heap2.add(element2);
+        heap2.add(element1);
         heap2.add(element3);
 
-        assertEquals(30, heap2.getMax().getValue(), "Max should be 30 after adding elements to heap2");
+        assertEquals(30, heap2.getMax().getValue());
     }
 
     @Test
