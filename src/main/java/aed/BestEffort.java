@@ -2,11 +2,27 @@ package aed;
 
 import java.util.ArrayList;
 
+import aed.heap.Heap;
+import aed.heap.HeapElement;
+import aed.implementation.HeapIDS;
+import aed.implementation.comparators.GananciaComparator;
+import aed.implementation.comparators.TimestampComparator;
+
 public class BestEffort {
-    //Completar atributos privados
+    private Heap<HeapElement<Traslado>> _heapRedituables;
+    private Heap<HeapElement<Traslado>> _heapAntiguos;
 
     public BestEffort(int cantCiudades, Traslado[] traslados){
-        // Implementar
+        ArrayList<HeapElement<Traslado>> arrayTraslados = new ArrayList<HeapElement<Traslado>>();
+
+        for(Traslado traslado : traslados) 
+        {
+            HeapElement<Traslado> nodoTraslado = new HeapElement<Traslado>(traslado, 2);
+            arrayTraslados.add(nodoTraslado);
+        }
+
+        _heapRedituables = new Heap<HeapElement<Traslado>>(new GananciaComparator(), HeapIDS.HeapRedituables.ordinal(), arrayTraslados);
+        _heapAntiguos = new Heap<HeapElement<Traslado>>(new TimestampComparator(), HeapIDS.HeapAntiguos.ordinal(), arrayTraslados);
     }
 
     public void registrarTraslados(Traslado[] traslados){
