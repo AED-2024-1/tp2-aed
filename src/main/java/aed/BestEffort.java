@@ -14,6 +14,10 @@ public class BestEffort {
     private Heap<HeapElement<Traslado>> _heapRedituables;
     private Heap<HeapElement<Traslado>> _heapAntiguos;
     private Heap<HeapElement<Ciudad>> _heapSuperHabit;
+    private ArrayList<HeapElement<Ciudad>> _Maxganancia;
+    private ArrayList<HeapElement<Ciudad>> _Maxperdida;
+    private int _promedioGanancia;
+
 
     public BestEffort(int cantCiudades, Traslado[] traslados){
         ArrayList<HeapElement<Traslado>> arrayTraslados = new ArrayList<HeapElement<Traslado>>();
