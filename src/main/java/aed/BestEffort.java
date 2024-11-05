@@ -46,7 +46,15 @@ public class BestEffort {
     }
 
     public void registrarTraslados(Traslado[] traslados){
-        // Implementar
+        int i = 0;
+        for(Traslado traslado : traslados) 
+        {
+            HeapElement<Traslado> nodoTraslado = new HeapElement<Traslado>(traslado, 2);
+
+            _heapRedituables.add(nodoTraslado);
+            _heapAntiguos.add(nodoTraslado);
+            i++;
+        }
     }
 
     public int[] despacharMasRedituables(int n){
