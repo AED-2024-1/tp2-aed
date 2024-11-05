@@ -17,6 +17,8 @@ public class BestEffort {
     private int  _Maxganancia;
     private int _Maxperdida;
     private ArrayList _IdMaxganancia;
+    private ArrayList _IdMaxperdida;
+
     private int _promedioGanancia;
     ArrayList<HeapElement<Ciudad>> arrayCiudad;
 
@@ -25,6 +27,7 @@ public class BestEffort {
         ArrayList<HeapElement<Traslado>> arrayTraslados = new ArrayList<HeapElement<Traslado>>();
         arrayCiudad =  new ArrayList<HeapElement<Ciudad>>();
         _IdMaxganancia = new ArrayList<>();
+        _IdMaxperdida = new ArrayList<>();
 
         int i = 0;
         for(Traslado traslado : traslados) 
@@ -76,6 +79,10 @@ public class BestEffort {
            HeapElement<Ciudad> origen = arrayCiudad.get(index);
            origen.getValue().setGanancia(origen.getValue().getGanancia()+value.getValue().getGananciaNeta());
            maxgan(origen);
+           index = value.getValue().getDestino();
+           HeapElement<Ciudad> destino = arrayCiudad.get(index);
+           destino.getValue().setPerdida(destino.getValue().getPerdida()+value.getValue().getGananciaNeta());
+           maxper(destino);
         }
 
         return res;
@@ -96,6 +103,23 @@ public class BestEffort {
         }
     }
 
+    private void maxper(HeapElement<Ciudad> value){
+        int id = value.getValue().getId();
+        if(_IdMaxperdida.size() == 0){
+        _IdMaxperdida.add(id);
+        _Maxperdida = value.getValue().getPerdida();
+        }else{
+            if(_Maxperdida < value.getValue().getPerdida()){
+                _IdMaxperdida = new ArrayList<>();
+                _IdMaxperdida.add(id);
+            }else if( _Maxperdida == value.getValue().getPerdida()){
+                _IdMaxperdida.add(id);
+            }
+
+        }
+
+    }
+
     public int[] despacharMasAntiguos(int n){
         // Implementar
         return null;
@@ -113,7 +137,7 @@ public class BestEffort {
 
     public ArrayList<Integer> ciudadesConMayorPerdida(){
         // Implementar
-        return null;
+        return _IdMaxperdida;
     }
 
     public int gananciaPromedioPorTraslado(){
