@@ -2,6 +2,8 @@ package aed;
 
 import java.util.ArrayList;
 
+import aed.nodos.Traslado;
+
 public class BestEffort {
     //Completar atributos privados
 
