@@ -1,4 +1,4 @@
-package aed;
+package aed.nodos;
 
 public class Traslado {
     
@@ -16,11 +16,19 @@ public class Traslado {
         this.timestamp = timestamp;
     }
 
+    public int getDestino() {
+        return destino;
+    }
+    public int getGananciaNeta() {
+        return gananciaNeta;
+    }
+    public int getId() {
+        return id;
+    }
+    public int getOrigen() {
+        return origen;
+    }
     public int getTimestamp() {
         return timestamp;
-    }
-
-    public int getGanancia() {
-        return gananciaNeta;
     }
 }

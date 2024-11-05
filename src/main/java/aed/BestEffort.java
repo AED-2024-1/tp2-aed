@@ -3,6 +3,7 @@ package aed;
 import java.util.ArrayList;
 
 import aed.heap.Heap;
+import aed.nodos.*;
 import aed.heap.HeapElement;
 import aed.implementation.HeapIDS;
 import aed.implementation.comparators.GananciaComparator;

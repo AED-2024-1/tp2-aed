@@ -10,7 +10,7 @@ public class HeapElement<T> implements HeapNode {
         this.value = value;
         this.indices = new int[numberOfHeaps]; 
     }
-
+    
     public T getValue() {
         return value;
     }

@@ -136,4 +136,23 @@ public class Heap<T extends HeapNode> {
             siftDown(largest);
         }
     }
+    @Override
+    public String toString(){
+        String res = "[";
+        int i;
+        HeapElement val;
+        for(i = 0; i < _heap.size()-1;i++){
+        val = (HeapElement) _heap.get(i);
+
+            if(_heap.get(i)!= null){
+            res = res + val.getValue() + ",";
+            }
+        }
+        val = (HeapElement) _heap.get(i);
+        
+        if(_heap.get(i)!= null){
+        res = res + val.getValue() + "]";
+        }
+        return res;
+    }
 }
