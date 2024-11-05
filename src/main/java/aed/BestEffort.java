@@ -62,8 +62,17 @@ public class BestEffort {
     }
 
     public int[] despacharMasRedituables(int n){
-        // Implementar
-        return null;
+        int[] res = new int[_heapRedituables.size()];
+        HeapElement<Traslado> value;
+        int handle;
+        for(int i = 0; i < n; i++){
+           value =  _heapRedituables.extractMax();
+           handle = value.getHandle(HeapIDS.HeapAntiguos.ordinal());
+           _heapAntiguos.remove(handle);
+           res[n] = value.getValue().getId();
+        }
+
+        return res;
     }
 
     public int[] despacharMasAntiguos(int n){

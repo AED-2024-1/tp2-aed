@@ -136,6 +136,9 @@ public class Heap<T extends HeapNode> {
             siftDown(largest);
         }
     }
+    public int size(){
+        return _heap.size();
+    }
     
     @Override
     public String toString(){
