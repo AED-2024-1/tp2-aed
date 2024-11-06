@@ -40,9 +40,19 @@ public class Heap<T extends HeapNode> {
             siftDown(_len-1-i);
         }
     }
+    public void ordenar(int index){
+        siftDown(index);
+        siftUp(index);
+        }
+    
 
     public void add(T value) {
+        if(_len !=  _heap.size()){
+            _heap.set(_len,value);
+
+        }else{
         _heap.add(value);
+        }
         // Utilizamos las funcionalidades de la interfaz HeapNode, que nos provee una forma de
         // setear el valor del handle en cada posición (representada por el heapId)
         value.setHandle(_heapId,_len);
