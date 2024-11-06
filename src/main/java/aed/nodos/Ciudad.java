@@ -22,6 +22,10 @@ public class Ciudad {
     public void setSuperhabit(int superhabit) {
         this.superhabit = superhabit;
     }
+
+    public int getId() {
+        return id;
+    }
     public int getGanancia() {
         return ganancia;
     }

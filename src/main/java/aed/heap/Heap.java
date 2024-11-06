@@ -22,6 +22,25 @@ public class Heap<T extends HeapNode> {
         _heapId = heapId;
     }
 
+    // Constructor para heapificar un array
+    public Heap(Comparator<T> comparator, int heapId, ArrayList<T> elements) 
+    {   
+        _len = elements.size();
+        _comparator = comparator;
+        _heapId = heapId;
+        _heap = new ArrayList<T>(elements);
+
+        heapify();
+    }
+
+    private void heapify() 
+    {
+        for(int i = 0; i < _len; i++)
+        {
+            siftDown(_len-1-i);
+        }
+    }
+
     public void add(T value) {
         _heap.add(value);
         // Utilizamos las funcionalidades de la interfaz HeapNode, que nos provee una forma de
@@ -32,15 +51,20 @@ public class Heap<T extends HeapNode> {
     }
 
     public T extractMax() {
+        return remove(0); // Reutilización de la función remove
+    }
+
+    public T getMax() {
         return _heap.get(0);
     }
 
-    public void remove(int handle) {
+    public T remove(int handle) {
         if (handle < 0 || handle >= _len) {
-            return;
+            return null;
         }
 
         T lastElement = _heap.get(_len - 1);
+        T removedElement = _heap.get(handle);
         
         _heap.set(handle, lastElement);
         lastElement.setHandle(_heapId, handle);
@@ -55,6 +79,8 @@ public class Heap<T extends HeapNode> {
             siftUp(handle); // O(logn)
             siftDown(handle); // O(logn)
         }
+
+        return removedElement;
 
         // O(logn)
         
@@ -110,6 +136,10 @@ public class Heap<T extends HeapNode> {
             siftDown(largest);
         }
     }
+    public int size(){
+        return _heap.size();
+    }
+    
     @Override
     public String toString(){
         String res = "[";

@@ -6,9 +6,9 @@ public class HeapElement<T> implements HeapNode {
     private T value;
     private int[] indices; // Array que guarda en cada posición un handle, y el índice es el heapId
 
-    public HeapElement(T value, int len) {
+    public HeapElement(T value, int numberOfHeaps) {
         this.value = value;
-        this.indices = new int[len]; 
+        this.indices = new int[numberOfHeaps]; 
     }
     
     public T getValue() {
