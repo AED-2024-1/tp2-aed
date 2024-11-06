@@ -40,6 +40,11 @@ public class Heap<T extends HeapNode> {
             siftDown(_len-1-i);
         }
     }
+    public void ordenar(int index){
+        siftDown(index);
+        siftUp(index);
+        }
+    
 
     public void add(T value) {
         if(_len !=  _heap.size()){

@@ -106,8 +106,10 @@ public class BestEffort {
     }
 
     public int ciudadConMayorSuperavit(){
-        // Implementar
-        return 0;
+        HeapElement<Ciudad> nodo = _heapSuperHabit.getMax();
+        Ciudad ciudad = nodo.getValue();
+        int id = ciudad.getId();
+        return id;
     }
 
     public ArrayList<Integer> ciudadesConMayorGanancia(){
@@ -137,6 +139,8 @@ public class BestEffort {
         HeapElement<Ciudad> origen = arrayCiudad.get(index);
         Ciudad Ciudad_origen = origen.getValue();
         Ciudad_origen.setGanancia(Ciudad_origen.getGanancia() + traslado.getGananciaNeta());
+        Ciudad_origen.setSuperhabit(Ciudad_origen.getSuperhabit() + traslado.getGananciaNeta());
+        _heapSuperHabit.ordenar(origen.getHandle(0));
         maxgan(origen);
     }
 
@@ -146,6 +150,8 @@ public class BestEffort {
         HeapElement<Ciudad> destino = arrayCiudad.get(index);
         Ciudad Ciudad_destino = destino.getValue();
         Ciudad_destino.setPerdida(Ciudad_destino.getPerdida() + traslado.getGananciaNeta());
+        Ciudad_destino.setSuperhabit(Ciudad_destino.getSuperhabit() - traslado.getGananciaNeta());
+        _heapSuperHabit.ordenar(destino.getHandle(0));
         maxper(destino);
     }
 
