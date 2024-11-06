@@ -29,7 +29,6 @@ public class Ciudad {
     public int getGanancia() {
         return ganancia;
     }
-    
     public int getPerdida() {
         return perdida;
     }

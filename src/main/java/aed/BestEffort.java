@@ -16,11 +16,11 @@ public class BestEffort {
     private Heap<HeapElement<Ciudad>> _heapSuperHabit;
     private int  _Maxganancia;
     private int _Maxperdida;
-    private ArrayList _IdMaxganancia;
-    private ArrayList _IdMaxperdida;
-
     private int _promedioGanancia;
+    private int _despachados;
     ArrayList<HeapElement<Ciudad>> arrayCiudad;
+    private ArrayList<Integer> _IdMaxganancia;
+    private ArrayList<Integer> _IdMaxperdida;
 
 
     public BestEffort(int cantCiudades, Traslado[] traslados){
@@ -75,54 +75,34 @@ public class BestEffort {
            handle = value.getHandle(HeapIDS.HeapAntiguos.ordinal());
            _heapAntiguos.remove(handle);
            res[i] = value.getValue().getId();
-           int index = value.getValue().getOrigen();
-           HeapElement<Ciudad> origen = arrayCiudad.get(index);
-           origen.getValue().setGanancia(origen.getValue().getGanancia()+value.getValue().getGananciaNeta());
-           maxgan(origen);
-           index = value.getValue().getDestino();
-           HeapElement<Ciudad> destino = arrayCiudad.get(index);
-           destino.getValue().setPerdida(destino.getValue().getPerdida()+value.getValue().getGananciaNeta());
-           maxper(destino);
+           //////// Hasta aca remuevo de ambos heaps el Traslado y sumo el id en la res
+           seteoGanaciaCiudad(value);
+           seteoPerdidaCiudad(value);
+           promediogan(value);
+           _despachados++;
         }
-
         return res;
     }
-    private void maxgan(HeapElement<Ciudad> value){
-        int id = value.getValue().getId();
-        if(_IdMaxganancia.size() == 0){
-        _IdMaxganancia.add(id);
-        _Maxganancia = value.getValue().getGanancia();
-        }else{
-            if(_Maxganancia < value.getValue().getGanancia()){
-                _IdMaxganancia = new ArrayList<>();
-                _IdMaxganancia.add(id);
-            }else if(_Maxganancia == value.getValue().getGanancia()){
-                _IdMaxganancia.add(id);
-            }
 
-        }
-    }
 
-    private void maxper(HeapElement<Ciudad> value){
-        int id = value.getValue().getId();
-        if(_IdMaxperdida.size() == 0){
-        _IdMaxperdida.add(id);
-        _Maxperdida = value.getValue().getPerdida();
-        }else{
-            if(_Maxperdida < value.getValue().getPerdida()){
-                _IdMaxperdida = new ArrayList<>();
-                _IdMaxperdida.add(id);
-            }else if( _Maxperdida == value.getValue().getPerdida()){
-                _IdMaxperdida.add(id);
-            }
 
-        }
-
-    }
 
     public int[] despacharMasAntiguos(int n){
-        // Implementar
-        return null;
+        int[] res = new int[n];
+        HeapElement<Traslado> value;
+        int handle;
+        for(int i = 0; i < n; i++){
+           value =  _heapAntiguos.extractMax();
+           handle = value.getHandle(HeapIDS.HeapRedituables.ordinal());
+           _heapRedituables.remove(handle);
+           res[i] = value.getValue().getId();
+           //////// Hasta aca remuevo de ambos heaps el Traslado y sumo el id en la res
+           seteoGanaciaCiudad(value);
+           seteoPerdidaCiudad(value);
+           promediogan(value);
+           _despachados++;
+        }
+        return res;
     }
 
     public int ciudadConMayorSuperavit(){
@@ -141,8 +121,71 @@ public class BestEffort {
     }
 
     public int gananciaPromedioPorTraslado(){
-        // Implementar
-        return 0;
+       int res  = (int) Math.floor(_promedioGanancia/ _despachados);
+        return res;
+    }
+
+    private void promediogan(HeapElement<Traslado> nodo){
+        Traslado traslado = nodo.getValue();
+        int ganancia = traslado.getGananciaNeta();
+        _promedioGanancia  = _promedioGanancia + ganancia;
+    }
+
+    private void seteoGanaciaCiudad(HeapElement<Traslado> nodo){
+        Traslado traslado = nodo.getValue();
+        int index = traslado.getOrigen();
+        HeapElement<Ciudad> origen = arrayCiudad.get(index);
+        Ciudad Ciudad_origen = origen.getValue();
+        Ciudad_origen.setGanancia(Ciudad_origen.getGanancia() + traslado.getGananciaNeta());
+        maxgan(origen);
+    }
+
+     private void seteoPerdidaCiudad(HeapElement<Traslado> nodo){
+        Traslado traslado = nodo.getValue();
+        int index = traslado.getDestino();
+        HeapElement<Ciudad> destino = arrayCiudad.get(index);
+        Ciudad Ciudad_destino = destino.getValue();
+        Ciudad_destino.setPerdida(Ciudad_destino.getPerdida() + traslado.getGananciaNeta());
+        maxper(destino);
+    }
+
+    private void maxgan(HeapElement<Ciudad> value){
+        Ciudad ciudad = value.getValue();
+        int ganancia_ciudad = ciudad.getGanancia();
+        int id = ciudad.getId();
+        if(_IdMaxganancia.size() == 0){
+            _IdMaxganancia.add(id);
+            _Maxganancia = ganancia_ciudad;
+        }else{
+            if(_Maxganancia < ganancia_ciudad){
+                _IdMaxganancia = new ArrayList<>();
+                _IdMaxganancia.add(id);
+                _Maxganancia = ganancia_ciudad;
+            }else if(_Maxganancia == ganancia_ciudad){
+                _IdMaxganancia.add(id);
+            }
+
+        }
+    }
+
+    private void maxper(HeapElement<Ciudad> value){
+        Ciudad ciudad = value.getValue();
+        int perdida_ciudad = ciudad.getPerdida();
+        int id = ciudad.getId();
+        if(_IdMaxperdida.size() == 0){
+            _IdMaxperdida.add(id);
+            _Maxperdida = perdida_ciudad;
+        }else{
+            if(_Maxperdida < perdida_ciudad ){
+                _IdMaxperdida = new ArrayList<>();
+                _IdMaxperdida.add(id);
+                _Maxperdida = perdida_ciudad;
+            }else if( _Maxperdida == perdida_ciudad ){
+                _IdMaxperdida.add(id);
+            }
+
+        }
+
     }
     
 }
