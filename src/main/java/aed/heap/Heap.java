@@ -49,9 +49,8 @@ public class Heap<T extends HeapNode> {
     public void add(T value) {
         if(_len !=  _heap.size()){
             _heap.set(_len,value);
-
         }else{
-        _heap.add(value);
+            _heap.add(value);
         }
         // Utilizamos las funcionalidades de la interfaz HeapNode, que nos provee una forma de
         // setear el valor del handle en cada posición (representada por el heapId)

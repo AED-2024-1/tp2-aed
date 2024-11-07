@@ -55,14 +55,11 @@ public class BestEffort {
     }
 
     public void registrarTraslados(Traslado[] traslados){
-        int i = 0;
         for(Traslado traslado : traslados) 
         {
             HeapElement<Traslado> nodoTraslado = new HeapElement<Traslado>(traslado, 2);
-
             _heapRedituables.add(nodoTraslado);
             _heapAntiguos.add(nodoTraslado);
-            i++;
         }
     }
 
