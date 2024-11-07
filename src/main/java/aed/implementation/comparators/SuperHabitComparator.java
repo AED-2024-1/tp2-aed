@@ -11,6 +11,9 @@ public class SuperHabitComparator implements Comparator<HeapElement<Ciudad>>  {
     @Override
     public int compare(HeapElement<Ciudad> t1, HeapElement<Ciudad> t2) 
     {
+        if(Integer.compare(t1.getValue().getSuperhabit(), t2.getValue().getSuperhabit()) == 0){
+            return Integer.compare(t2.getValue().getId(), t1.getValue().getId());
+        }
         return Integer.compare(t1.getValue().getSuperhabit(), t2.getValue().getSuperhabit());
     }
 }
