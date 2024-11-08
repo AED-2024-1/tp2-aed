@@ -13,7 +13,6 @@ public class GananciaComparator implements Comparator<HeapElement<Traslado>> {
     {
         if(Integer.compare(t1.getValue().getGananciaNeta(), t2.getValue().getGananciaNeta()) == 0){
             return Integer.compare(t2.getValue().getId(), t1.getValue().getId());
-
         }
         return Integer.compare(t1.getValue().getGananciaNeta(), t2.getValue().getGananciaNeta());
     }

@@ -6,16 +6,16 @@ import java.util.Comparator;
 import aed.heap.interfaces.HeapNode;
 
 public class Heap<T extends HeapNode> {
+
     private ArrayList<T> _heap;
     private Comparator<T> _comparator;
     private int _len;
+    private int _heapId;
     // ¿Por qué un heapID? Esto es debido a que mapearemos los heapsId como los indices de un array
     // en el objeto HeapElement, y cada valor determinará el handle según el heap
 
-    private int _heapId;
-
     // DI: inyectamos comparador según el heap que queramos
-    public Heap(Comparator<T> comparator, int heapId) {
+    public Heap(Comparator<T> comparator, int heapId) { //O(1)
         _heap = new ArrayList<T>();
         _len = 0;
         _comparator = comparator;
@@ -23,59 +23,60 @@ public class Heap<T extends HeapNode> {
     }
 
     // Constructor para heapificar un array
-    public Heap(Comparator<T> comparator, int heapId, ArrayList<T> elements) 
-    {   
+    public Heap(Comparator<T> comparator, int heapId, ArrayList<T> elements) //O(N)
+    {
         _len = elements.size();
         _comparator = comparator;
         _heapId = heapId;
         _heap = new ArrayList<T>(elements);
 
-        heapify();
+        heapify(); //O(N)
     }
 
-    private void heapify() 
+    private void heapify() //O(N) Como se vio en la teorica practica y laboratorio esta funcion tiene complejidad O(N)
     {
-        for(int i = 0; i < _len; i++)
-        {
-            siftDown(_len-1-i);
+        for (int i = 0; i < _len; i++) { // O(N)
+            T element = _heap.get(i);
+            element.setHandle(_heapId, i); // Seteamos el handle acá 
+        }
+        for (int i = 0; i < _len; i++) { // O(N)
+            siftDown(_len - 1 - i);
         }
     }
-    public void ordenar(int index){
-        siftDown(index);
-        siftUp(index);
-        }
-    
 
-    public void add(T value) {
-        if(_len !=  _heap.size()){
-            _heap.set(_len,value);
+    public void sort(int index) {  // O(log N)
+        siftDown(index);  // O(log N)
+        siftUp(index);    // O(log N)
+    }
 
-        }else{
-        _heap.add(value);
+    public void add(T value) {  // O(log N)
+        if (_len != _heap.size()) {
+            _heap.set(_len, value);
+        } else {
+            _heap.add(value); // Como se nos indica en el tp esto vale como O(1) amortizado.
         }
-        // Utilizamos las funcionalidades de la interfaz HeapNode, que nos provee una forma de
-        // setear el valor del handle en cada posición (representada por el heapId)
-        value.setHandle(_heapId,_len);
-        _len++;
+
+        value.setHandle(_heapId, _len);  // Utilizamos las funcionalidades de la interfaz HeapNode, que nos provee una forma de
+        _len++;                         // setear el valor del handle en cada posición (representada por el heapId)
         siftUp(_len - 1);
     }
 
-    public T extractMax() {
+    public T extractMax() {  // O(log N)
         return remove(0); // Reutilización de la función remove
     }
 
-    public T getMax() {
+    public T getMax() {     //O(1)
         return _heap.get(0);
     }
 
-    public T remove(int handle) {
+    public T remove(int handle) {  // O(log N)
         if (handle < 0 || handle >= _len) {
             return null;
         }
 
         T lastElement = _heap.get(_len - 1);
         T removedElement = _heap.get(handle);
-        
+
         _heap.set(handle, lastElement);
         lastElement.setHandle(_heapId, handle);
 
@@ -84,19 +85,15 @@ public class Heap<T extends HeapNode> {
 
         // _Len es un contador que va desde 0 hasta lo que nosotros representemos como la longitud del heap
         // es trivial ver que si eliminamos el ultimo elemento, para nosotros nada mas es necesario decir _len--
-
         if (handle < _len) {
-            siftUp(handle); // O(logn)
-            siftDown(handle); // O(logn)
+            siftUp(handle); // O(log N)
+            siftDown(handle); // O(log N)
         }
 
         return removedElement;
-
-        // O(logn)
-        
     }
 
-    private void siftUp(int index) {
+    private void siftUp(int index) {  // O(log N)
         if (index == 0) {
             return;
         }
@@ -118,7 +115,7 @@ public class Heap<T extends HeapNode> {
         }
     }
 
-    private void siftDown(int index) {
+    private void siftDown(int index) {  // O(log N)
         if (index >= _len) {
             return;
         }
@@ -140,32 +137,33 @@ public class Heap<T extends HeapNode> {
             _heap.set(index, _heap.get(largest));
             _heap.set(largest, temp);
 
-            _heap.get(index).setHandle(_heapId,index);
+            _heap.get(index).setHandle(_heapId, index);
             _heap.get(largest).setHandle(_heapId, largest);
 
             siftDown(largest);
         }
     }
-    public int size(){
+
+    public int size() { //O(1)
         return _heap.size();
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         String res = "[";
         int i;
-        HeapElement val;
-        for(i = 0; i < _heap.size()-1;i++){
-        val = (HeapElement) _heap.get(i);
+        HeapElement<T> val;
+        for (i = 0; i < _heap.size() - 1; i++) {
+            val = (HeapElement) _heap.get(i);
 
-            if(_heap.get(i)!= null){
-            res = res + val.getValue() + ",";
+            if (_heap.get(i) != null) {
+                res = res + val.getValue() + ",";
             }
         }
         val = (HeapElement) _heap.get(i);
-        
-        if(_heap.get(i)!= null){
-        res = res + val.getValue() + "]";
+
+        if (_heap.get(i) != null) {
+            res = res + val.getValue() + "]";
         }
         return res;
     }
