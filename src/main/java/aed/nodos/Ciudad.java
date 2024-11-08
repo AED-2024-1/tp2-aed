@@ -4,13 +4,13 @@ public class Ciudad {
     int id;
     int ganancia;
     int perdida;
-    int superhabit;
+    int superavit;
 
     public Ciudad(int num){
         id = num;
         ganancia = 0;
         perdida = 0;
-        superhabit = 0;
+        superavit = 0;
     }
 
     public void setPerdida(int perdida) {
@@ -19,8 +19,8 @@ public class Ciudad {
     public void setGanancia(int ganancia) {
         this.ganancia = ganancia;
     }
-    public void setSuperhabit(int superhabit) {
-        this.superhabit = superhabit;
+    public void setSuperavit(int superhabit) {
+        this.superavit = superhabit;
     }
 
     public int getId() {
@@ -32,7 +32,7 @@ public class Ciudad {
     public int getPerdida() {
         return perdida;
     }
-    public int getSuperhabit() {
-        return superhabit;
+    public int getSuperavit() {
+        return superavit;
     }
 }
