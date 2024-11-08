@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import aed.heap.Heap;
 import aed.heap.HeapElement;
-import aed.implementation.HeapIDS;
+import aed.implementation.HeapTrasladosIDS;
 import aed.implementation.comparators.GananciaComparator;
 import aed.nodos.Traslado;
 
@@ -160,7 +160,7 @@ public class HeapTests {
         list.add(element14);
 
         
-        heap3 =  new Heap<HeapElement<Integer>>(comparator, HeapIDS.HeapRedituables.ordinal(), list);
+        heap3 =  new Heap<HeapElement<Integer>>(comparator, HeapTrasladosIDS.HeapRedituables.ordinal(), list);
 
         heap3.toString(); 
     }
