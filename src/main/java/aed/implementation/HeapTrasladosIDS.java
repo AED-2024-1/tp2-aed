@@ -1,6 +1,6 @@
 package aed.implementation;
 
-public enum HeapIDS {
+public enum HeapTrasladosIDS {
     HeapRedituables,
     HeapAntiguos;
 }

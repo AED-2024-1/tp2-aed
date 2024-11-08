@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import aed.heap.Heap;
 import aed.nodos.*;
 import aed.heap.HeapElement;
-import aed.implementation.HeapIDS;
+import aed.implementation.HeapCiudadIDS;
+import aed.implementation.HeapTrasladosIDS;
 import aed.implementation.comparators.GananciaComparator;
 import aed.implementation.comparators.SuperavitComparator;
 import aed.implementation.comparators.TimestampComparator;
@@ -35,17 +36,16 @@ public class BestEffort {
             arrayTraslados.add(nodoTraslado); // Como se nos indica en el tp esto vale como O(1) amortizado.
         }
 
-        _heapRedituables = new Heap<HeapElement<Traslado>>(new GananciaComparator(), HeapIDS.HeapRedituables.ordinal(), arrayTraslados); //O(T)
-        _heapAntiguos = new Heap<HeapElement<Traslado>>(new TimestampComparator(), HeapIDS.HeapAntiguos.ordinal(), arrayTraslados); //O(T)
+        _heapRedituables = new Heap<HeapElement<Traslado>>(new GananciaComparator(), HeapTrasladosIDS.HeapRedituables.ordinal(), arrayTraslados); //O(T)
+        _heapAntiguos = new Heap<HeapElement<Traslado>>(new TimestampComparator(), HeapTrasladosIDS.HeapAntiguos.ordinal(), arrayTraslados); //O(T)
 
         for (int n = 0; n < cantCiudades; n++) { //O(|C|)
             Ciudad ciudad = new Ciudad(n);
             HeapElement<Ciudad> nodoCiudad = new HeapElement<Ciudad>(ciudad, 1);
-            nodoCiudad.setHandle(0, n);
             _arrayCiudad.add(nodoCiudad); // Como se nos indica en el tp esto vale como O(1) amortizado.
         }
 
-        _heapSuperavit = new Heap<HeapElement<Ciudad>>(new SuperavitComparator(), 0, _arrayCiudad); //O(C)
+        _heapSuperavit = new Heap<HeapElement<Ciudad>>(new SuperavitComparator(), HeapCiudadIDS.HeapSuperavit.ordinal(), _arrayCiudad); //O(C)
     } 
 
     public void registrarTraslados(Traslado[] traslados) { //O(|T|(log T))
@@ -66,13 +66,13 @@ public class BestEffort {
         int handle;
         for (int i = 0; i < n; i++) { //O(N)
             value = _heapRedituables.extractMax(); // O(log T)
-            handle = value.getHandle(HeapIDS.HeapAntiguos.ordinal());
+            handle = value.getHandle(HeapTrasladosIDS.HeapAntiguos.ordinal());
             _heapAntiguos.remove(handle); // O(log T)
             res[i] = value.getValue().getId();
             //////// Hasta aca remuevo de ambos heaps el Traslado y sumo el id en la res
-           seteoGanaciaCiudad(value);
-            seteoPerdidaCiudad(value);
-            promediogan(value); //O(1)
+            setGanaciaCiudad(value);
+            setPerdidaCiudad(value);
+            promedioGanancia(value); //O(1)
             _despachados++;
         }
         return res;
@@ -87,13 +87,13 @@ public class BestEffort {
         int handle;
         for (int i = 0; i < n; i++) { //O(N)
             value = _heapAntiguos.extractMax(); // O(log T)
-            handle = value.getHandle(HeapIDS.HeapRedituables.ordinal());
+            handle = value.getHandle(HeapTrasladosIDS.HeapRedituables.ordinal());
             _heapRedituables.remove(handle); // O(log T)
             res[i] = value.getValue().getId();
             //////// Hasta aca remuevo de ambos heaps el Traslado y sumo el id en la res
-           seteoGanaciaCiudad(value); //O(log |C|)
-            seteoPerdidaCiudad(value); //O(log |C|)
-            promediogan(value);  //O(1)
+            setGanaciaCiudad(value); //O(log |C|)
+            setPerdidaCiudad(value); //O(log |C|)
+            promedioGanancia(value);  //O(1)
             _despachados++;
         }
         return res;
@@ -121,13 +121,13 @@ public class BestEffort {
     }
 
     // FUNCIONES PRIVADAS PARA EL SETEO DE ESTADISTICAS
-    private void promediogan(HeapElement<Traslado> nodo) { //O(1)
+    private void promedioGanancia(HeapElement<Traslado> nodo) { //O(1)
         Traslado traslado = nodo.getValue();
         int ganancia = traslado.getGananciaNeta();
         _promedioGanancia = _promedioGanancia + ganancia;
     }
 
-    private void seteoGanaciaCiudad(HeapElement<Traslado> nodo) { //O(log |C|)
+    private void setGanaciaCiudad(HeapElement<Traslado> nodo) { //O(log |C|)
         Traslado traslado = nodo.getValue();
         int index = traslado.getOrigen();
         HeapElement<Ciudad> origen = _arrayCiudad.get(index);
@@ -136,12 +136,13 @@ public class BestEffort {
         ciudadOrigen.setGanancia(ciudadOrigen.getGanancia() + traslado.getGananciaNeta());
         ciudadOrigen.setSuperavit(ciudadOrigen.getSuperavit() + traslado.getGananciaNeta());
 
+        // Reordeno el heap
         _heapSuperavit.sort(origen.getHandle(0)); //O(log |C|)
 
         maxGanancia(origen);  //0(1) 
     }
 
-    private void seteoPerdidaCiudad(HeapElement<Traslado> nodo) { //O(log |C|)
+    private void setPerdidaCiudad(HeapElement<Traslado> nodo) { //O(log |C|)
         Traslado traslado = nodo.getValue();
         int index = traslado.getDestino();
         HeapElement<Ciudad> destino = _arrayCiudad.get(index);
