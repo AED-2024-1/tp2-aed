@@ -5,6 +5,7 @@ C:\Users\IanBarutta\Downloads\tp2-aed\src\main\java\aed\heap\interfaces\HeapNode
 C:\Users\IanBarutta\Downloads\tp2-aed\src\main\java\aed\implementation\comparators\GananciaComparator.java
 C:\Users\IanBarutta\Downloads\tp2-aed\src\main\java\aed\implementation\comparators\SuperavitComparator.java
 C:\Users\IanBarutta\Downloads\tp2-aed\src\main\java\aed\implementation\comparators\TimestampComparator.java
-C:\Users\IanBarutta\Downloads\tp2-aed\src\main\java\aed\implementation\HeapIDS.java
+C:\Users\IanBarutta\Downloads\tp2-aed\src\main\java\aed\implementation\HeapCiudadIDS.java
+C:\Users\IanBarutta\Downloads\tp2-aed\src\main\java\aed\implementation\HeapTrasladosIDS.java
 C:\Users\IanBarutta\Downloads\tp2-aed\src\main\java\aed\nodos\Ciudad.java
 C:\Users\IanBarutta\Downloads\tp2-aed\src\main\java\aed\nodos\Traslado.java

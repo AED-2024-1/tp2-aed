@@ -15,7 +15,7 @@ public class Heap<T extends HeapNode> {
     // en el objeto HeapElement, y cada valor determinará el handle según el heap
 
     // DI: inyectamos comparador según el heap que queramos
-    public Heap(Comparator<T> comparator, int heapId) { //O(1)
+    public Heap(Comparator<T> comparator, int heapId) { // O(1)
         _heap = new ArrayList<T>();
         _len = 0;
         _comparator = comparator;
@@ -23,21 +23,23 @@ public class Heap<T extends HeapNode> {
     }
 
     // Constructor para heapificar un array
-    public Heap(Comparator<T> comparator, int heapId, ArrayList<T> elements) //O(N)
+    public Heap(Comparator<T> comparator, int heapId, ArrayList<T> elements) // O(N)
     {
         _len = elements.size();
         _comparator = comparator;
         _heapId = heapId;
-        _heap = new ArrayList<T>(elements);
+        _heap = new ArrayList<T>(elements); // O(N)
 
         heapify(); //O(N)
+
+        // O(N + N) = O(N)
     }
 
-    private void heapify() //O(N) Como se vio en la teorica practica y laboratorio esta funcion tiene complejidad O(N)
+    private void heapify() // O(N)
     {
         for (int i = 0; i < _len; i++) { // O(N)
-            T element = _heap.get(i);
-            element.setHandle(_heapId, i); // Seteamos el handle acá 
+            T element = _heap.get(i); // O(1)
+            element.setHandle(_heapId, i); // Seteamos el handle acá, O(1)
         }
         for (int i = 0; i < _len; i++) { // O(N)
             siftDown(_len - 1 - i);
@@ -48,39 +50,34 @@ public class Heap<T extends HeapNode> {
         siftDown(index);  // O(log N)
         siftUp(index);    // O(log N)
     }
-
+    
     public void add(T value) {  // O(log N)
-        if (_len != _heap.size()) {
-            _heap.set(_len, value);
-        } else {
-            _heap.add(value); // Como se nos indica en el tp esto vale como O(1) amortizado.
-        }
-
-        value.setHandle(_heapId, _len);  // Utilizamos las funcionalidades de la interfaz HeapNode, que nos provee una forma de
+        _heap.add(value); // Como se nos indica en el tp esto vale como O(1) amortizado.
+        value.setHandle(_heapId, _len);  // O(1), Utilizamos las funcionalidades de la interfaz HeapNode, que nos provee una forma de
         _len++;                         // setear el valor del handle en cada posición (representada por el heapId)
-        siftUp(_len - 1);
+        siftUp(_len - 1); // O(log N)
     }
 
     public T extractMax() {  // O(log N)
-        return remove(0); // Reutilización de la función remove
+        return remove(0); // Reutilización de la función remove, O(log N)
     }
 
-    public T getMax() {     //O(1)
+    public T getMax() {     // O(1)
         return _heap.get(0);
     }
 
     public T remove(int handle) {  // O(log N)
-        if (handle < 0 || handle >= _len) {
+        if (handle < 0 || handle >= _len) { // O(1)
             return null;
         }
 
-        T lastElement = _heap.get(_len - 1);
-        T removedElement = _heap.get(handle);
+        T lastElement = _heap.get(_len - 1); // O(1)
+        T removedElement = _heap.get(handle); // O(1)
 
-        _heap.set(handle, lastElement);
-        lastElement.setHandle(_heapId, handle);
+        _heap.set(handle, lastElement); // O(1)
+        lastElement.setHandle(_heapId, handle); // O(1)
 
-        _heap.set(_len - 1, null);
+        _heap.remove(_len - 1); // Removemos último elemento, O(1)
         _len--;
 
         // _Len es un contador que va desde 0 hasta lo que nosotros representemos como la longitud del heap
@@ -98,21 +95,21 @@ public class Heap<T extends HeapNode> {
             return;
         }
 
-        T child = _heap.get(index);
+        T child = _heap.get(index); // O(1)
 
-        int father_index = (int) Math.floor((double) (index - 1) / 2);
+        int father_index = (int) Math.floor((double) (index - 1) / 2); // O(1)
 
-        T father = _heap.get(father_index);
+        T father = _heap.get(father_index); // O(1)
 
-        if (_comparator.compare(father, child) < 0) {
-            _heap.set(father_index, child);
-            _heap.set(index, father);
+        if (_comparator.compare(father, child) < 0) { 
+            _heap.set(father_index, child); // O(1)
+            _heap.set(index, father); // O(1)
 
-            father.setHandle(_heapId, index);
-            child.setHandle(_heapId, father_index);
+            father.setHandle(_heapId, index); // O(1)
+            child.setHandle(_heapId, father_index); // O(1)
 
-            siftUp(father_index);
-        }
+            siftUp(father_index); // O(log N)
+        } // O(log N)
     }
 
     private void siftDown(int index) {  // O(log N)
@@ -120,31 +117,31 @@ public class Heap<T extends HeapNode> {
             return;
         }
 
-        int left_child_index = 2 * index + 1;
-        int right_child_index = 2 * index + 2;
-        int largest = index;
+        int left_child_index = 2 * index + 1; // O(1)
+        int right_child_index = 2 * index + 2; // O(1)
+        int largest = index; // O(1)
 
         if (left_child_index < _len && _comparator.compare(_heap.get(left_child_index), _heap.get(largest)) > 0) {
-            largest = left_child_index;
+            largest = left_child_index; // O(1)
         }
 
         if (right_child_index < _len && _comparator.compare(_heap.get(right_child_index), _heap.get(largest)) > 0) {
-            largest = right_child_index;
+            largest = right_child_index; // O(1)
         }
 
         if (largest != index) {
-            T temp = _heap.get(index);
-            _heap.set(index, _heap.get(largest));
-            _heap.set(largest, temp);
+            T temp = _heap.get(index); // O(1)
+            _heap.set(index, _heap.get(largest)); // O(1)
+            _heap.set(largest, temp); // O(1)
 
-            _heap.get(index).setHandle(_heapId, index);
-            _heap.get(largest).setHandle(_heapId, largest);
+            _heap.get(index).setHandle(_heapId, index); // O(1)
+            _heap.get(largest).setHandle(_heapId, largest); // O(1)
 
-            siftDown(largest);
+            siftDown(largest); // O(log N)
         }
     }
 
-    public int size() { //O(1)
+    public int size() { // O(1)
         return _heap.size();
     }
 

@@ -1,34 +1,33 @@
 package aed.nodos;
 
 public class Traslado {
-    
-    int id;
-    int origen;
-    int destino;
-    int gananciaNeta;
-    int timestamp;
+    int _id;
+    int _origen;
+    int _destino;
+    int _gananciaNeta;
+    int _timestamp;
 
     public Traslado(int id, int origen, int destino, int gananciaNeta, int timestamp){
-        this.id = id;
-        this.origen = origen;
-        this.destino = destino;
-        this.gananciaNeta = gananciaNeta;
-        this.timestamp = timestamp;
+        this._id = id;
+        this._origen = origen;
+        this._destino = destino;
+        this._gananciaNeta = gananciaNeta;
+        this._timestamp = timestamp;
     }
 
     public int getDestino() {
-        return destino;
+        return _destino;
     }
     public int getGananciaNeta() {
-        return gananciaNeta;
+        return _gananciaNeta;
     }
     public int getId() {
-        return id;
+        return _id;
     }
     public int getOrigen() {
-        return origen;
+        return _origen;
     }
     public int getTimestamp() {
-        return timestamp;
+        return _timestamp;
     }
 }

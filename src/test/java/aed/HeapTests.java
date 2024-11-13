@@ -1,8 +1,7 @@
 package aed;
 
-import java.util.Comparator;
-
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -12,11 +11,8 @@ import org.junit.jupiter.api.Test;
 import aed.heap.Heap;
 import aed.heap.HeapElement;
 import aed.implementation.HeapTrasladosIDS;
-import aed.implementation.comparators.GananciaComparator;
-import aed.nodos.Traslado;
 
 public class HeapTests {
-
     private Heap<HeapElement<Integer>> heap1;
     private Heap<HeapElement<Integer>> heap2;
     private Heap<HeapElement<Integer>> heap3;
@@ -25,7 +21,7 @@ public class HeapTests {
     private HeapElement<Integer> element3;
 
     @BeforeEach
-    void setUp() {
+    void init() {
         Comparator<HeapElement<Integer>> comparator = Comparator.comparingInt(HeapElement::getValue);
 
         heap1 = new Heap<>(comparator, 0);
@@ -37,7 +33,7 @@ public class HeapTests {
     }
 
     @Test
-    void testAddAndExtractMax() {
+    void testAñadirYExtraerMaximo() {
         heap1.add(element1);
         heap1.add(element2);
         heap1.add(element3);
@@ -53,7 +49,7 @@ public class HeapTests {
     }
 
     @Test
-    void testRemoveElement() {
+    void testRemoverElementos() {
         heap1.add(element1);
         heap1.add(element2);
         heap1.add(element3);
@@ -68,15 +64,15 @@ public class HeapTests {
         heap1.remove(indexInHeap1);
         heap2.remove(indexInHeap2);
 
-        assertNotEquals(20, heap1.getMax().getValue(), "Max should no longer be 20 in heap1 after removal");
-        assertNotEquals(20, heap2.getMax().getValue(), "Max should no longer be 20 in heap2 after removal");
+        assertNotEquals(20, heap1.getMax().getValue());
+        assertNotEquals(20, heap2.getMax().getValue());
 
-        assertEquals(30, heap1.getMax().getValue(), "Max should be 30 in heap1 after removal of 20");
-        assertEquals(30, heap2.getMax().getValue(), "Max should be 30 in heap2 after removal of 20");
+        assertEquals(30, heap1.getMax().getValue());
+        assertEquals(30, heap2.getMax().getValue());
     }
 
     @Test
-    void testAddAndRemoveMultipleElements() {
+    void testAñadirYRemover() {
         HeapElement element4 = new HeapElement(40, 2);
         HeapElement element5 = new HeapElement(50, 2);
 
@@ -86,28 +82,28 @@ public class HeapTests {
         heap1.add(element2);
         heap1.add(element1);
 
-        assertEquals(50, heap1.getMax().getValue(), "Max should be 50 in heap1 after adding multiple elements");
+        assertEquals(50, heap1.getMax().getValue());
 
         heap1.remove(element5.getHandle(0));
-        assertEquals(40, heap1.getMax().getValue(), "Max should be 40 in heap1 after removing 50");
+        assertEquals(40, heap1.getMax().getValue());
 
         heap1.remove(element4.getHandle(0));
-        assertEquals(30, heap1.getMax().getValue(), "Max should be 30 in heap1 after removing 40");
+        assertEquals(30, heap1.getMax().getValue());
     }
 
     @Test
-    void testRemoveInvalidHandle() {
+    void testRemoverHandlesInvalidos() {
         heap1.add(element1);
         heap1.add(element2);
 
         int invalidHandle = -1;
         heap1.remove(invalidHandle);
 
-        assertEquals(20, heap1.getMax().getValue(), "Max should remain 20 after attempting to remove with an invalid handle");
+        assertEquals(20, heap1.getMax().getValue());
     }
 
     @Test
-    void testHeapPropertyAfterMultipleAddAndRemove() {
+    void testHeapRemoverYAñadirMultiplesVeces() {
         heap1.add(element1);
         heap1.add(element2);
         heap1.add(element3);
@@ -117,13 +113,13 @@ public class HeapTests {
         heap2.add(element3);
 
         heap1.remove(element3.getHandle(0));
-        assertEquals(20, heap1.getMax().getValue(), "Max should be 20 in heap1 after removing 30");
+        assertEquals(20, heap1.getMax().getValue());
 
         heap2.remove(element3.getHandle(1));
-        assertEquals(20, heap2.getMax().getValue(), "Max should be 20 in heap2 after removing 30");
+        assertEquals(20, heap2.getMax().getValue());
     }
     @Test
-    void prueba() {
+    void testAñadirVariosElementosADosHeaps() {
         ArrayList<HeapElement<Integer>> list = new ArrayList<HeapElement<Integer>>();
         Comparator<HeapElement<Integer>> comparator = Comparator.comparingInt(HeapElement::getValue);
 
@@ -160,7 +156,7 @@ public class HeapTests {
         list.add(element14);
 
         
-        heap3 =  new Heap<HeapElement<Integer>>(comparator, HeapTrasladosIDS.HeapRedituables.ordinal(), list);
+        heap3 = new Heap<HeapElement<Integer>>(comparator, HeapTrasladosIDS.HeapRedituables.ordinal(), list);
 
         heap3.toString(); 
     }

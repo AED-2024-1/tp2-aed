@@ -1,38 +1,38 @@
 package aed.nodos;
 
 public class Ciudad {
-    int id;
-    int ganancia;
-    int perdida;
-    int superavit;
+    int _id;
+    int _ganancia;
+    int _perdida;
+    int _superavit;
 
     public Ciudad(int num){
-        id = num;
-        ganancia = 0;
-        perdida = 0;
-        superavit = 0;
+        _id = num;
+        _ganancia = 0;
+        _perdida = 0;
+        _superavit = 0;
     }
 
     public void setPerdida(int perdida) {
-        this.perdida = perdida;
+        this._perdida = perdida;
     }
     public void setGanancia(int ganancia) {
-        this.ganancia = ganancia;
+        this._ganancia = ganancia;
     }
     public void setSuperavit(int superhabit) {
-        this.superavit = superhabit;
+        this._superavit = superhabit;
     }
 
     public int getId() {
-        return id;
+        return _id;
     }
     public int getGanancia() {
-        return ganancia;
+        return _ganancia;
     }
     public int getPerdida() {
-        return perdida;
+        return _perdida;
     }
     public int getSuperavit() {
-        return superavit;
+        return _superavit;
     }
 }
