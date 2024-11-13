@@ -35,14 +35,14 @@ public class Heap<T extends HeapNode> {
         // O(N + N) = O(N)
     }
 
-    private void heapify() // O(N)
+    private void heapify() // O(N) como lo vimos en la teórica, laboratorio y práctica por algoritmo de Floyd
     {
         for (int i = 0; i < _len; i++) { // O(N)
             T element = _heap.get(i); // O(1)
             element.setHandle(_heapId, i); // Seteamos el handle acá, O(1)
         }
         for (int i = 0; i < _len; i++) { // O(N)
-            siftDown(_len - 1 - i);
+            siftDown(_len - 1 - i); // O(log N)
         }
     }
 
@@ -78,10 +78,8 @@ public class Heap<T extends HeapNode> {
         lastElement.setHandle(_heapId, handle); // O(1)
 
         _heap.remove(_len - 1); // Removemos último elemento, O(1)
-        _len--;
+        _len--; 
 
-        // _Len es un contador que va desde 0 hasta lo que nosotros representemos como la longitud del heap
-        // es trivial ver que si eliminamos el ultimo elemento, para nosotros nada mas es necesario decir _len--
         if (handle < _len) {
             siftUp(handle); // O(log N)
             siftDown(handle); // O(log N)
