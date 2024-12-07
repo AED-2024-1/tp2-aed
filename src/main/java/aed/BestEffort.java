@@ -42,7 +42,7 @@ public class BestEffort {
         }
 
         _heapSuperavit = new Heap<Ciudad>(new SuperavitComparator(), HeapCiudadIDS.HeapSuperavit.ordinal(), _arrayCiudad); //O(C)
-        _heapCiudad = new Heap<Ciudad>(new OrigenComparator(), HeapCiudadIDS.HeapOrigen.ordinal(), _heapSuperavit);
+        _heapCiudad = new Heap<Ciudad>(new OrigenComparator(), HeapCiudadIDS.HeapOrigen.ordinal(), _heapSuperavit); //O(C)
     } 
 
     public void registrarTraslados(Traslado[] traslados) { //O(|T|(log T))

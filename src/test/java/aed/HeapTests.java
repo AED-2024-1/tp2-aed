@@ -44,7 +44,7 @@ public class HeapTests {
     @Test
     void testRemoverElementos() {
         heap1.add(20);
-        heap1.add(20);
+        heap1.add(40);
         heap1.add(30);
         
         Comparator<Integer> comparator = Comparator.comparingInt(Integer::intValue);
@@ -56,8 +56,8 @@ public class HeapTests {
         heap1.remove(element1.getHandle(0));
         heap2.remove(element1.getHandle(1));
 
-        assertNotEquals(20, heap1.getMax().getValue());
-        assertNotEquals(20, heap2.getMax().getValue());
+        assertNotEquals(40, heap1.getMax().getValue());
+        assertNotEquals(40, heap2.getMax().getValue());
 
         assertEquals(30, heap1.getMax().getValue());
         assertEquals(30, heap2.getMax().getValue());

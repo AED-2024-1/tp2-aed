@@ -44,7 +44,7 @@ public class Heap<T> {
         _heapId = heapId;
         _heap = new ArrayList<HeapElement<T>>();
 
-        for (int i = 0; i < elements.length; i++) {
+        for (int i = 0; i < elements.length; i++) { //O(N)
             _heap.add(new HeapElement<T>(elements[i])); // O(1)
         }
 
@@ -53,10 +53,10 @@ public class Heap<T> {
         // O(N + N) = O(N)
     }
 
-    public Heap(Comparator<T> comparator, int heapId, Heap<T> elements) // O(N)
+    public Heap(Comparator<T> comparator, int heapId, Heap<T> elements) // O(N) Brother heap
     {
         _len = elements._len;
-        _heap = new ArrayList(elements._heap);
+        _heap = new ArrayList(elements._heap); // O(N)
         _comparator = comparator;
         _heapId = heapId;
 
